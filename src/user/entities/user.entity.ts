@@ -3,14 +3,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { IUser } from 'src/types';
-import { hash } from 'bcryptjs';
+// import { hash } from 'bcryptjs';
 
 @Entity({ name: 'users' })
 export class UserEntity implements IUser {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ type: 'text', default: 'unknown' })
@@ -22,14 +22,21 @@ export class UserEntity implements IUser {
   @Column({ type: 'text', default: 'unknown' })
   username: string;
 
-  @CreateDateColumn()
+  /** createdAt — дата создания, тип значения Date; */
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
+  /** updatedAt — дата изменения, тип значения Date. */
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  updatedAt: Date;
 
-  @Column({ select: false })
+  @Column({ select: false, default: '' })
   password: string;
 
-  @BeforeInsert()
-  async hashPassword() {
-    this.password = await hash(this.password, 10);
-  }
+  @Column({ default: '' })
+  comment: string;
+
+  // @BeforeInsert()
+  // async hashPassword() {
+  //   this.password = await hash(this.password, 10);
+  // }
 }

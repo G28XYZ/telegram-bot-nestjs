@@ -2,11 +2,12 @@ app:
   port: 3000
 postgres:
   type: postgres
-  host: b9t6jf5henjylncrzhs5-postgresql.services.clever-cloud.com
-  port: 50013
-  database: b9t6jf5henjylncrzhs5
-  username: ucdzkiajwk40mr3twn3h
-  password: ZkQXNjTEjTntuhXP0Js5vCDR0hw2TT
+  host: localhost
+  port: 5433
+  database: test-tg-bot
+  username: postgres
+  password: postgres
   synchronize: true
+  applicationName: test-tg-bot
 bot:
   token: 669334747:AAEdl9W7QJFXW7T3q5Y085mwK22_XuMMI9U

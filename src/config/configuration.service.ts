@@ -18,6 +18,7 @@ export class ConfigurationService<T extends TConfiguration = TConfiguration> ext
   constructor(internalConfig: T) {
     super(internalConfig);
     this._config = internalConfig;
+    // new DataSource(this.ormconfig).initialize()
     console.log('create config');
   }
 
@@ -25,8 +26,12 @@ export class ConfigurationService<T extends TConfiguration = TConfiguration> ext
     return this._config;
   }
 
-  get ormconfig() {
-    return ConfigurationService.getOrmConfig();
+  get ormconfig(): DataSourceOptions {
+    return {
+      ...ConfigurationService.yamlConfig().postgres,
+      entities: [join(__dirname, '**', '*.entity.{ts,js}')],
+      migrations: [join(__dirname, 'migration', '**', '*.{ts,js}')],
+    };
   }
 
   static yamlConfig() {
@@ -36,10 +41,10 @@ export class ConfigurationService<T extends TConfiguration = TConfiguration> ext
   static getOrmConfig() {
     return registerAs(
       'database',
-      (): TypeOrmModuleOptions => ({
+      () => ({
         ...ConfigurationService.yamlConfig().postgres,
-        // entities: [],
-        migrations: [join(__dirname, '/migration/**/*.{ts,js}')],
+        entities: [join(__dirname, './../**', '*.entity.{ts,js}')],
+        migrations: [join(__dirname, './../migration', '**', '*.{ts,js}')],
       }),
     );
   }

@@ -25,7 +25,7 @@ const telegrafFactory = {
     }),
     ConfigurationModule,
     forwardRef(() => TelegrafModule.forRootAsync(telegrafFactory)),
-    // forwardRef(() => TypeOrmModule.forRootAsync({ useFactory: ConfigurationService.getOrmConfig() })),
+    TypeOrmModule.forRootAsync({ useFactory: ConfigurationService.getOrmConfig() }),
   ],
   controllers: [AppController],
   providers: [AppService],

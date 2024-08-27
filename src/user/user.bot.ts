@@ -1,9 +1,9 @@
-import { Action, Ctx, Hears, InjectBot, Start, Update } from 'nestjs-telegraf';
+import { Action, Command, Ctx, Hears, InjectBot, Start, Update } from 'nestjs-telegraf';
 import { Format, Markup, Telegraf } from 'telegraf';
 import { Context } from 'src/user/user.controller';
 import { UserService } from './user.service';
 import { IUser } from 'src/types';
-import { actionButtons, timeButtons } from 'src/app.buttons';
+import { actionButtons } from 'src/app.buttons';
 
 @Update()
 export class UserBot {
@@ -16,26 +16,35 @@ export class UserBot {
     return ctx?.message?.from || ctx?.update?.callback_query?.from;
   }
 
-  sendUserFormInfo(ctx: Context, messages: Record<string, string>, optionalMessage?: string) {
-    if (optionalMessage) {
-      ctx.sendMessage(optionalMessage);
-    }
-    setTimeout(() => {
-      if (messages.first_name.length) {
-        ctx.sendMessage(messages.first_name);
-        return;
-      }
-      if (messages.last_name.length) {
-        ctx.sendMessage(messages.last_name);
-        return;
-      }
-    }, 500);
-  }
-
   @Start()
-  async start(@Ctx() ctx: Context, isAgreePolitic: boolean = false) {
+  async start(@Ctx() ctx: Context) {
     const userData = this._getUserFromContext(ctx);
     console.log(userData);
-    ctx.sendMessage('Hello');
+    console.log(await this.userService.getAll());
+    ctx.sendMessage('Привет жми кнопку', actionButtons);
   }
+
+  @Hears('Регистрация')
+  async onRegister(@Ctx() ctx: Context) {
+    const userData = this._getUserFromContext(ctx);
+
+    let resText = userData.username;
+
+    if(Boolean(await this.userService.findById(userData?.id)) === false) {
+      const user = await this.userService.create(userData);
+      resText += user ? ' привет' : ' - произошла ошибка'
+    } else (resText += ' уже зареган')
+
+    ctx.sendMessage(resText);
+
+  }
+
+  @Hears('Инфа о пользователях')
+  async getAllUsers(@Ctx() ctx: Context) {
+    const userData = this._getUserFromContext(ctx);
+    console.log(userData);
+    const users = await this.userService.getAll();
+    ctx.sendMessage(JSON.stringify(users));
+  }
+
 }
