@@ -1,13 +1,14 @@
 app:
-  port: 3000
+  port: 3030
 postgres:
   type: postgres
-  host: localhost
-  port: 5433
+  host: ep-dark-fog-a5e81ezy.us-east-2.aws.neon.tech
+  port: 5432
   database: test-tg-bot
-  username: postgres
-  password: postgres
+  username: test-tg-bot_owner
+  password: jb75kJHNZzPd
   synchronize: true
+  ssl: true
   applicationName: test-tg-bot
 bot:
   token: 669334747:AAEdl9W7QJFXW7T3q5Y085mwK22_XuMMI9U

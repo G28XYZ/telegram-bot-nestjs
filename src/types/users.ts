@@ -4,5 +4,4 @@ export interface IUser {
   last_name: string;
   username: string;
   createdAt: Date;
-  password: string;
 }

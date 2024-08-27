@@ -12,20 +12,20 @@ import { ConfigurationModule } from './config/configuration.module';
 const telegrafFactory = {
   async useFactory(): Promise<TelegrafModuleOptions> {
     return {
-      token: configuration().bot.token,
+      token: ConfigurationService.configuration.bot.token,
     };
   },
 };
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({
       load: [configuration],
     }),
+    UserModule,
     ConfigurationModule,
-    forwardRef(() => TelegrafModule.forRootAsync(telegrafFactory)),
-    TypeOrmModule.forRootAsync({ useFactory: ConfigurationService.getOrmConfig() }),
+    TelegrafModule.forRootAsync(telegrafFactory),
+    TypeOrmModule.forRootAsync({ useFactory: ConfigurationService.ormconfig }),
   ],
   controllers: [AppController],
   providers: [AppService],

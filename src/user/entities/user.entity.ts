@@ -1,16 +1,9 @@
-import {
-  BeforeInsert,
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 import { IUser } from 'src/types';
-// import { hash } from 'bcryptjs';
 
 @Entity({ name: 'users' })
 export class UserEntity implements IUser {
-  @PrimaryGeneratedColumn()
+  @PrimaryColumn()
   id: number;
 
   @Column({ type: 'text', default: 'unknown' })
@@ -26,17 +19,6 @@ export class UserEntity implements IUser {
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
   /** updatedAt — дата изменения, тип значения Date. */
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updatedAt: Date;
-
-  @Column({ select: false, default: '' })
-  password: string;
-
-  @Column({ default: '' })
-  comment: string;
-
-  // @BeforeInsert()
-  // async hashPassword() {
-  //   this.password = await hash(this.password, 10);
-  // }
+  // @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  // updatedAt: Date;
 }

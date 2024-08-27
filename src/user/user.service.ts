@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { plainToInstance } from 'class-transformer';
 
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 
@@ -13,8 +12,7 @@ export class UserService {
   constructor(
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
-  )
-  {}
+  ) {}
 
   private _genUser(user: Partial<UserEntity>) {
     return plainToInstance(UserEntity, user);
@@ -35,5 +33,4 @@ export class UserService {
   findById(id: number) {
     return this.userRepository.findOneBy({ id });
   }
-
 }

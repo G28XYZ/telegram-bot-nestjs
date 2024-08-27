@@ -1,21 +1,9 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-import {
-  Telegraf,
-  Context as ContextTelegraf,
-  NarrowedContext,
-} from 'telegraf';
+import { Telegraf, Context as ContextTelegraf, NarrowedContext } from 'telegraf';
 import { InjectBot } from 'nestjs-telegraf';
 
 export interface Context extends NarrowedContext<ContextTelegraf, any> {

@@ -17,7 +17,13 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
+    "typeorm:cli": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/config/configuration.service.ts",
+    "migration:generate": "npm run typeorm -- -d ./src/config/configuration.service.ts migration:generate ./src/migrations/$name",
+    "migration:create": "npm run typeorm -- migration:create ./src/migrations/$name",
+    "migration:revert": "npm run typeorm -- -d ./src/config/configuration.service.ts migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^10.0.0",
@@ -26,7 +32,6 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/typeorm": "^10.0.2",
-    "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
     "nestjs-telegraf": "^2.8.1",
     "pg": "^8.12.0",
@@ -38,7 +43,6 @@
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
-    "@types/bcryptjs": "^2.4.6",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.2",
     "@types/js-yaml": "^4.0.9",
