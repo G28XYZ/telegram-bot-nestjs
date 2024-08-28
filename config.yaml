@@ -11,4 +11,4 @@ postgres:
   ssl: true
   applicationName: test-tg-bot
 bot:
-  token: 669334747:AAEdl9W7QJFXW7T3q5Y085mwK22_XuMMI9U
+  token: 6628056195:AAGtIwxg-BhEQAiSglM-HMV-Yg1LAYtokO8
