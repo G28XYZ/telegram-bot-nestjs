@@ -1,4 +1,4 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
@@ -22,8 +22,8 @@ const telegrafFactory = {
     ConfigModule.forRoot({
       load: [configuration],
     }),
-    UserModule,
     ConfigurationModule,
+    UserModule,
     TelegrafModule.forRootAsync(telegrafFactory),
     TypeOrmModule.forRootAsync({ useFactory: ConfigurationService.ormconfig }),
   ],
